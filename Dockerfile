@@ -12,7 +12,7 @@ RUN go mod download
 COPY . .
 RUN go build -o server .
 
-FROM philipslabs/siderite:latest AS siderite
+FROM philipslabs/siderite:v0.4.1 AS siderite
 
 FROM alpine:latest
 RUN apk add --no-cache git openssh openssl bash postgresql-client
@@ -20,4 +20,4 @@ WORKDIR /app
 COPY --from=siderite /app/siderite /app/siderite
 COPY --from=builder /src/server /app
 
-ENTRYPOINT ["/app/siderite","runner"]
+CMD ["/app/siderite","function"]
