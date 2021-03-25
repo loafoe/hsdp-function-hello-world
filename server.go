@@ -25,9 +25,9 @@ func main() {
 	e.Use(middleware.Recover())
 
 	// Routes
-	e.GET("/", hello)
-	e.GET("/api/test/:host/:port", connectTester)
-	e.GET("/api/dump/:base64_path", fileDumper)
+	e.Any("/", hello)
+	e.Any("/api/test/:host/:port", connectTester)
+	e.Any("/api/dump/:base64_path", fileDumper)
 	e.Any("/dump", requestDumper)
 
 	if port := os.Getenv("PORT"); port != "" {
