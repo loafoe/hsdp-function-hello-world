@@ -1,5 +1,4 @@
 FROM golang:1.16.0-alpine3.13 as builder
-LABEL maintainer="andy.lo-a-foe@philips.com"
 RUN apk add --no-cache git openssh gcc musl-dev
 WORKDIR /src
 COPY go.mod .
@@ -12,9 +11,10 @@ RUN go mod download
 COPY . .
 RUN go build -o server .
 
-FROM philipslabs/siderite:v0.6.0 AS siderite
+FROM philipslabs/siderite:v0.7.1 AS siderite
 
 FROM alpine:latest
+LABEL maintainer="andy.lo-a-foe@philips.com"
 RUN apk add --no-cache git openssh openssl bash postgresql-client
 WORKDIR /app
 COPY --from=siderite /app/siderite /app/siderite
